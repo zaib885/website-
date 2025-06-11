@@ -84,6 +84,12 @@ const AdminAnalytics: React.FC = () => {
     );
   }
 
+  // Ensure totalRevenue is a number
+  const totalRevenue = Number(analyticsData.totalStats.totalRevenue) || 0;
+  const totalOrders = Number(analyticsData.totalStats.totalOrders) || 0;
+  const totalProducts = Number(analyticsData.totalStats.totalProducts) || 0;
+  const totalCustomers = Number(analyticsData.totalStats.totalCustomers) || 0;
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -107,7 +113,7 @@ const AdminAnalytics: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-text-secondary text-sm">Total Revenue</p>
-              <p className="text-2xl font-bold text-text">${analyticsData.totalStats.totalRevenue.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-text">${totalRevenue.toLocaleString()}</p>
             </div>
             <DollarSign className="h-10 w-10 text-green-500" />
           </div>
@@ -117,7 +123,7 @@ const AdminAnalytics: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-text-secondary text-sm">Total Orders</p>
-              <p className="text-2xl font-bold text-text">{analyticsData.totalStats.totalOrders}</p>
+              <p className="text-2xl font-bold text-text">{totalOrders}</p>
             </div>
             <Package className="h-10 w-10 text-blue-500" />
           </div>
@@ -127,7 +133,7 @@ const AdminAnalytics: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-text-secondary text-sm">Products</p>
-              <p className="text-2xl font-bold text-text">{analyticsData.totalStats.totalProducts}</p>
+              <p className="text-2xl font-bold text-text">{totalProducts}</p>
             </div>
             <TrendingUp className="h-10 w-10 text-purple-500" />
           </div>
@@ -137,7 +143,7 @@ const AdminAnalytics: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-text-secondary text-sm">Customers</p>
-              <p className="text-2xl font-bold text-text">{analyticsData.totalStats.totalCustomers}</p>
+              <p className="text-2xl font-bold text-text">{totalCustomers}</p>
             </div>
             <Users className="h-10 w-10 text-orange-500" />
           </div>
