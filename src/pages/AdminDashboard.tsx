@@ -52,7 +52,7 @@ interface Order {
   total_amount: number;
   status: 'ordered' | 'shipped' | 'delivered' | 'cancelled';
   created_at: string;
-  items: Array<{
+  items?: Array<{
     product_name: string;
     quantity: number;
     price: number;
@@ -98,18 +98,23 @@ const AdminDashboard: React.FC = () => {
     try {
       setLoading(true);
       const [productsRes, categoriesRes, usersRes, ordersRes] = await Promise.all([
-        axios.get('http://localhost:3001/api/products'),
-        axios.get('http://localhost:3001/api/categories'),
-        axios.get('http://localhost:3001/api/users'),
-        axios.get('http://localhost:3001/api/orders')
+        axios.get('http://localhost:3001/api/products').catch(() => ({ data: [] })),
+        axios.get('http://localhost:3001/api/categories').catch(() => ({ data: [] })),
+        axios.get('http://localhost:3001/api/users').catch(() => ({ data: [] })),
+        axios.get('http://localhost:3001/api/orders').catch(() => ({ data: [] }))
       ]);
       
-      setProducts(productsRes.data);
-      setCategories(categoriesRes.data);
-      setUsers(usersRes.data);
-      setOrders(ordersRes.data);
+      setProducts(productsRes.data || []);
+      setCategories(categoriesRes.data || []);
+      setUsers(usersRes.data || []);
+      setOrders(ordersRes.data || []);
     } catch (error) {
       console.error('Error fetching data:', error);
+      // Set empty arrays as fallback
+      setProducts([]);
+      setCategories([]);
+      setUsers([]);
+      setOrders([]);
     } finally {
       setLoading(false);
     }
